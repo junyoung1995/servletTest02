@@ -19,7 +19,7 @@ import org.json.simple.parser.ParseException;
 /**
  * Servlet implementation class jsonTest
  */
-@WebServlet("/jsonTest")
+@WebServlet("jsonTest")
 public class jsonTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
