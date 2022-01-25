@@ -19,6 +19,6 @@ metadata-complete="true">
   </servlet>
   <servlet-mapping>
   	<servlet-name>jsonTest</servlet-name>
-  	<url-pattern>/jsonTest/customerInvoiceData</url-pattern>
+  	<url-pattern>/jsonTest/*.do</url-pattern>
   </servlet-mapping>
 </web-app>

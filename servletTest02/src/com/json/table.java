@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class table
  */
-@WebServlet("/Database/Table")
+@WebServlet("*.do")
 public class table extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -168,5 +168,10 @@ public class table extends HttpServlet {
 		} catch (UnsupportedEncodingException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		String viewPage = null;
+		String searchUri = request.getRequestURI(); //찾아가는 url
+		String contextPath = request.getContextPath();
+		String command = searchUri.substring(contextPath.length());
 	}
 }
