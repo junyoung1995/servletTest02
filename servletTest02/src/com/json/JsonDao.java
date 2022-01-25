@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JsonDAO {
+public class JsonDao {
 	private static final String driver = "org.mariadb.jdbc.Driver";
 	private static final String url = "jdbc:mariadb://127.0.0.1:3306/";
 	private static final String id = "root";
