@@ -2,6 +2,7 @@ package com.json;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,7 +33,8 @@ public class table extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("doGet이다.");
+		doAction(request, response);
 	}
 
 	/**
@@ -158,5 +160,12 @@ public class table extends HttpServlet {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+	private void doAction(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("doAction으로 넘어왔다.");
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
