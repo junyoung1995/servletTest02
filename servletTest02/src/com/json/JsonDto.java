@@ -2,7 +2,8 @@ package com.json;
 
 import java.sql.Timestamp;
 
-public class JsonVO {
+public class JsonDto {
+	//json데이터
 	private String EventID;
 	private String EventType;
 	private int CamID;
@@ -11,6 +12,23 @@ public class JsonVO {
 	private int PeriodStart;
 	private int Amount;
 	private Timestamp Reg_DT;
+	
+	public JsonDto() {
+		
+	}
+	
+	public JsonDto(String EventID, String EventType, int CamID,
+			String PlaneID, int PeriodEnd, int PeriodStart, 
+			int Amount, Timestamp Reg_DT) {
+		this.EventID = EventID;
+		this.EventType = EventType;
+		this.CamID = CamID;
+		this.PlaneID = PlaneID;
+		this.PeriodEnd = PeriodEnd;
+		this.PeriodStart = PeriodStart;
+		this.Amount = Amount;
+		this.Reg_DT = Reg_DT;
+	}
 	
 	public String getEventID() {
 		return EventID;
