@@ -41,7 +41,8 @@ public class table extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost method 진입");
+		System.out.println("doPost이다.");
+		doAction(request, response);
 		
 		String reqUrl = request.getRequestURI();
 		String ctxPath = request.getContextPath() + "/jsonTest/";
