@@ -19,7 +19,7 @@ import org.json.simple.parser.ParseException;
 /**
  * Servlet implementation class jsonTest
  */
-@WebServlet("*.do")
+@WebServlet("/jsonTest")
 public class jsonTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -96,9 +96,10 @@ public class jsonTest extends HttpServlet {
 		 * response.setContentType("text/html"); response.setCharacterEncoding("utf-8");
 		 * request.setAttribute("jsonResult", jsonResult);
 		 */
-		request.setAttribute("jsonData", jsonOutput);
-		ServletContext context = getServletContext();
-		RequestDispatcher dispatcher = context.getRequestDispatcher("/dataDB.jsp");
-		dispatcher.forward(request, response);
+		String jsonResult = jsonOutput.toJSONString();
+		System.out.println(jsonResult);
+		PrintWriter pw = response.getWriter();
+		pw.print(jsonResult);
+		pw.close();
 	}
 }
