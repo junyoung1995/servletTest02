@@ -20,9 +20,9 @@ public class JsonDao {
 	public JsonDao() {
 		try {
 			Class.forName(driver);
-			System.out.println("Oracle 드라이버 로딩 성공");
+			System.out.println("Oracle �뱶�씪�씠踰� 濡쒕뵫 �꽦怨�");
 			connection = DriverManager.getConnection(url, id, pw);
-			System.out.println("Connection 생성 성공");
+			System.out.println("Connection �깮�꽦 �꽦怨�");
 		}catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
@@ -30,7 +30,7 @@ public class JsonDao {
 		}
 	}
 	
-	//json 데이터 목록 조회
+	//json 데이터 셀렉트
 	public ArrayList<JsonDto> jsonSelect(){
 		ArrayList<JsonDto> jsonDtoList = new ArrayList<JsonDto>();
 		

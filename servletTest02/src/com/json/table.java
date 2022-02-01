@@ -192,7 +192,7 @@ public class table extends HttpServlet {
 	            command.execute(request, response);
 	            viewPage = "select.jsp";
 	        }else if(commandName.equals("/modify.do")) {
-	            command = new BModifyCommand();
+	            command = new ModifyDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.do";
 	        }else if(commandName.equals("/delete.do")) {
