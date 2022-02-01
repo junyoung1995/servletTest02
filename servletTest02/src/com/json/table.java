@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -171,8 +172,55 @@ public class table extends HttpServlet {
 		}
 		
 		String viewPage = null;
+		// 어떤 View 페이지로 보여줄지를 담는 변수
+        // 웹에서 어떤 로직을 수행할지를 결정해주는 Command객체 -> 유지보수 및 관리를 위한 분산 처리
+        // 동일한 BCommand 라는 인터페이스를 이용하여 동일한 메소드를 통해 각자 알맞은 로직을 수행하게 만들기위한 객체.
+		JsonCommand command = null;
+		
 		String searchUri = request.getRequestURI(); //찾아가는 url
 		String contextPath = request.getContextPath();
-		String command = searchUri.substring(contextPath.length());
+		String commandName = searchUri.substring(contextPath.length());
+		
+		  if(commandName.equals("/insert_view.do")) {
+	            viewPage = "insert_view.jsp";
+	        }else if(commandName.equals("/insertData.do")) {
+	            command = new InsertDataCommand();
+	            command.execute(request, response);
+	            viewPage = "selectData.do";
+	        }else if(commandName.equals("/selectData.do")) {
+	            command = new SelectDataCommand();
+	            command.execute(request, response);
+	            viewPage = "select.jsp";
+	        }else if(commandName.equals("/modify_view.do")) {
+	            command = new BContentCommand();
+	            command.execute(request, response);
+	            viewPage = "content_view.jsp";
+	        }else if(commandName.equals("/modify.do")) {
+	            command = new BModifyCommand();
+	            command.execute(request, response);
+	            viewPage = "select.do";
+	        }else if(commandName.equals("/delete.do")) {
+	            command = new DeleteDataCommand();
+	            command.execute(request, response);
+	            viewPage = "select.do";
+	        }else if(commandName.equals("/reply_view.do")) {
+	            command = new BReplyViewCommand();
+	            command.execute(request, response);
+	            viewPage = "reply_view.jsp";
+	        }else if(commandName.equals("/reply.do")) {
+	            command = new BReplyCommand();
+	            command.execute(request, response);
+	            viewPage = "list.do";
+	        }else {
+	            System.out.println("해당 Command 로직이 없습니다.");
+	            viewPage = "notCommand.jsp";
+	        }
+	        
+	        // RequestDispatcher 객체에다가 어떤 View 페이지로 보낼지 맵핑할 곳을 담는다.
+	        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+	        // 해당 페이지로 포워딩해준다. --> *.do로 받으면 다시 BFrontController로 가서 로직 수행.
+	        // .jsp 로 받으면 해당 View로 화면을 보여준다.
+	        dispatcher.forward(request, response);
+
 	}
 }
