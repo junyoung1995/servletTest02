@@ -181,25 +181,22 @@ public class table extends HttpServlet {
 		String contextPath = request.getContextPath();
 		String commandName = searchUri.substring(contextPath.length());
 		
-		  if(commandName.equals("/insert_view.do")) {
-	            viewPage = "insert_view.jsp";
-	        }else if(commandName.equals("/insertData.do")) {
+		   if(commandName.equals("/insertJson.do")) {
 	            command = new InsertDataCommand();
 	            command.execute(request, response);
-	            viewPage = "selectData.do";
-	        }else if(commandName.equals("/selectData.do")) {
+	            viewPage = "insertJson.do";
+	        }else if(commandName.equals("/selectJson.do")) {
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
-	            viewPage = "select.jsp";
-	        }else if(commandName.equals("/modify.do")) {
+	            viewPage = "selectJson.do";
+	        }else if(commandName.equals("/modifyJson.do")) {
 	            command = new ModifyDataCommand();
 	            command.execute(request, response);
-	            viewPage = "select.do";
-	        }else if(commandName.equals("/delete.do")) {
+	            viewPage = "modifyJson.do";
+	        }else if(commandName.equals("/deleteJson.do")) {
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
-	            viewPage = "select.do";
-
+	            viewPage = "deleteJson.do";
 	        }else if(commandName.equals("/createTable.do")) {
 	            command = new CreateTableCommand();
 	            command.execute(request, response);
@@ -212,9 +209,8 @@ public class table extends HttpServlet {
 	            command = new AlterTableCommand();
 	            command.execute(request, response);
 	            viewPage = "list.do";
-
 	        }else {
-	            System.out.println("�빐�떦 Command 濡쒖쭅�씠 �뾾�뒿�땲�떎.");
+	            System.out.println("아무것도 안들어옴");
 	            viewPage = "notCommand.jsp";
 	        }
 	        
