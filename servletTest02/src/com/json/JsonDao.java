@@ -75,5 +75,57 @@ public class JsonDao {
 			}
 		return jsonDtoList;
 	}
-	
+	public void modify(String EventID, String EventType, int CamID, String PlaneID, int PeriodEnd, int PeriodStart, int Amount) {
+        // TODO Auto-generated method stub
+		connection = null;
+		statement = null;
+		resultSet = null;
+ 
+        try {
+            connection = dataSource.getConnection();
+            String query = "update mvc_board set bName=?, bTitle=?, bContent=? where bId=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, bName);
+            pstmt.setString(2, bTitle);
+            pstmt.setString(3, bContent);
+            pstmt.setInt(4, Integer.parseInt(bId));
+            int result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO: handle exception
+        }finally {
+            try {
+                if(pstmt != null) pstmt.close();
+                if(conn != null) conn.close();
+            } catch (Exception e2) {
+                // TODO: handle exception
+                e2.printStackTrace();
+            }
+        }
+    }
+ 
+    public void delete(String bId) {
+        // TODO Auto-generated method stub
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = dataSource.getConnection();
+            String query = "delete from mvc_board where bId=?";
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, Integer.parseInt(bId));
+            int result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        } finally {
+            try {
+                if(pstmt != null) pstmt.close();
+                if(conn != null) conn.close();
+            } catch (Exception e2) {
+                // TODO: handle exception
+                e2.printStackTrace();
+            }
+        }
+    }
 }

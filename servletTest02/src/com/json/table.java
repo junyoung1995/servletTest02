@@ -191,23 +191,23 @@ public class table extends HttpServlet {
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.jsp";
-	        }else if(commandName.equals("/modify_view.do")) {
-	            command = new BContentCommand();
-	            command.execute(request, response);
-	            viewPage = "content_view.jsp";
 	        }else if(commandName.equals("/modify.do")) {
-	            command = new BModifyCommand();
+	            command = new ModifyDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.do";
 	        }else if(commandName.equals("/delete.do")) {
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.do";
-	        }else if(commandName.equals("/reply_view.do")) {
+	        }else if(commandName.equals("/createTable.do")) {
 	            command = new BReplyViewCommand();
 	            command.execute(request, response);
 	            viewPage = "reply_view.jsp";
-	        }else if(commandName.equals("/reply.do")) {
+	        }else if(commandName.equals("/deleteTable.do")) {
+	            command = new BReplyCommand();
+	            command.execute(request, response);
+	            viewPage = "list.do";
+	        }else if(commandName.equals("/alterTable.do")) {
 	            command = new BReplyCommand();
 	            command.execute(request, response);
 	            viewPage = "list.do";
