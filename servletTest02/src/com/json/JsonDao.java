@@ -2,19 +2,26 @@ package com.json;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
 import java.sql.Timestamp;
 
 public class JsonDao {
+	DataSource dataSource;
+	
 	private String driver = "org.mariadb.jdbc.Driver";
 	private String url = "jdbc:mariadb://127.0.0.1:3306/";
 	private String id = "root";
 	private String pw = "0000";
 	private Connection connection;
 	private Statement statement;
+	private PreparedStatement preparedStatement;
 	private ResultSet resultSet;
 	
 	public JsonDao() {
@@ -25,6 +32,18 @@ public class JsonDao {
 			System.out.println("Connection 성공");
 		}catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void insert(String EventID, String EventType, int CamID, String PlaneID, int PeriodEnd, int PeriodStart, int Amount) {
+		connection = null;
+		preparedStatement = null;
+		
+		try {
+			connection = DriverManager.getConnection(url, id, pw);
+			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart)";
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -82,21 +101,21 @@ public class JsonDao {
 		resultSet = null;
  
         try {
-            connection = dataSource.getConnection();
-            String query = "update mvc_board set bName=?, bTitle=?, bContent=? where bId=?";
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, bName);
-            pstmt.setString(2, bTitle);
-            pstmt.setString(3, bContent);
-            pstmt.setInt(4, Integer.parseInt(bId));
-            int result = pstmt.executeUpdate();
+            connection = DriverManager.getConnection(url, id, pw);
+            String query = "update mvc_board set EventType=?, CamID=?, PlaneID=?, PerionEnd=?, PeriodStart=?, Amount=? where EventID=?";
+            statement = connection.prepareStatement(query);
+            preparedStatement.setString(1, EventType);
+            preparedStatement.setInt(2, CamID);
+            preparedStatement.setString(3, PlaneID);
+            preparedStatement.setInt(4, Integer.parseInt(PeriodEnd));
+            int result = preparedStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: handle exception
         }finally {
             try {
-                if(pstmt != null) pstmt.close();
-                if(conn != null) conn.close();
+                if(preparedStatement != null) preparedStatement.close();
+                if(connection != null) connection.close();
             } catch (Exception e2) {
                 // TODO: handle exception
                 e2.printStackTrace();

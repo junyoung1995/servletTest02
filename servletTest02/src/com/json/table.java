@@ -60,11 +60,11 @@ public class table extends HttpServlet {
 					"(\r\n" + 
 					"	EventID	VARCHAR(30) Not Null primary key,\r\n" + 
 					"	EventType VARCHAR(30) not null,\r\n" + 
-					"	CamID smallint not null,\r\n" + 
+					"	CamID int not null,\r\n" + 
 					"	PlaneID VARCHAR(20) not null,\r\n" + 
 					"	PeriodEnd int not null,\r\n" + 
 					"	PeriodStart int not null,\r\n" + 
-					"	Amount smallint not null,\r\n" + 
+					"	Amount int not null,\r\n" + 
 					"	Reg_DT DateTime not null\r\n" + 
 					")";
 			pstmt = conn.prepareStatement(query);
@@ -199,21 +199,20 @@ public class table extends HttpServlet {
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.do";
-<<<<<<< HEAD
+
 	        }else if(commandName.equals("/createTable.do")) {
-	            command = new BReplyViewCommand();
+	            command = new CreateTableCommand();
 	            command.execute(request, response);
 	            viewPage = "reply_view.jsp";
 	        }else if(commandName.equals("/deleteTable.do")) {
-	            command = new BReplyCommand();
+	            command = new DeleteTableCommand();
 	            command.execute(request, response);
 	            viewPage = "list.do";
 	        }else if(commandName.equals("/alterTable.do")) {
-	            command = new BReplyCommand();
+	            command = new AlterTableCommand();
 	            command.execute(request, response);
 	            viewPage = "list.do";
-=======
->>>>>>> branch 'main' of https://github.com/junyoung1995/servletTest02.git
+
 	        }else {
 	            System.out.println("�빐�떦 Command 濡쒖쭅�씠 �뾾�뒿�땲�떎.");
 	            viewPage = "notCommand.jsp";

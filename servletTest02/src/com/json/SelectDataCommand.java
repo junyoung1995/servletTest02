@@ -14,7 +14,8 @@ public class SelectDataCommand implements JsonCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		JsonDao jsonDao = new JsonDao();
-		ArrayList<JsonDto> jsonDto = jsonDao.
+		ArrayList<JsonDto> jsonDto = jsonDao.jsonSelect();
+		request.setAttribute("jsonSelect", jsonDto);
 	}
 
 }

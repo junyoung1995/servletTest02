@@ -8,7 +8,15 @@ public class InsertDataCommand implements JsonCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		String EventID = request.getParameter("EventID");
+		String EventType = request.getParameter("EventType");
+		String CamID = request.getParameter("CamID");
+		String PlaneID = request.getParameter("PlaneID");
+		String PeriodEnd = request.getParameter("PeriodEnd");
+		String PeriodStart = request.getParameter("PeriodStart");
+		String Amount = request.getParameter("Amount");
 		
+		JsonDao jsonDao = new JsonDao();
+		jsonDao.
 	}
-
 }
