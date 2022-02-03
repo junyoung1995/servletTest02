@@ -35,7 +35,7 @@ public class table extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doGet이다.");
+		System.out.println("doGet�씠�떎.");
 		doAction(request, response);
 	}
 
@@ -43,7 +43,7 @@ public class table extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost이다.");
+		System.out.println("doPost�씠�떎.");
 		doAction(request, response);
 		
 		String reqUrl = request.getRequestURI();
@@ -76,10 +76,10 @@ public class table extends HttpServlet {
 			pw.println("<head></head>");
 			pw.println("<body>");
 			if(n == -1) {
-				pw.println("테이블 생성에 성공하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �깮�꽦�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
 			}
 			else {
-				pw.println("테이블 생성에 실패하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �깮�꽦�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
 			}
 			pw.println("</body>");
 		}catch(ClassNotFoundException e) {
@@ -113,10 +113,10 @@ public class table extends HttpServlet {
 			pw.println("<head></head>");
 			pw.println("<body>");
 			if(n == 1) {
-				pw.println("테이블 수정에 성공하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �닔�젙�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
 			}
 			else {
-				pw.println("테이블 수정에 실패하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �닔�젙�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
 			}
 			pw.println("</body>");
 		}catch(ClassNotFoundException e) {
@@ -150,10 +150,10 @@ public class table extends HttpServlet {
 			pw.println("<head></head>");
 			pw.println("<body>");
 			if(n == -1) {
-				pw.println("테이블 삭제에 성공하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �궘�젣�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
 			}
 			else {
-				pw.println("테이블 삭제에 실패하였습니다.<br/>");
+				pw.println("�뀒�씠釉� �궘�젣�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
 			}
 			pw.println("</body>");
 		}catch(ClassNotFoundException e) {
@@ -164,7 +164,7 @@ public class table extends HttpServlet {
 		}
 	}
 	private void doAction(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("doAction으로 넘어왔다.");
+		System.out.println("doAction�쑝濡� �꽆�뼱�솕�떎.");
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -172,12 +172,12 @@ public class table extends HttpServlet {
 		}
 		
 		String viewPage = null;
-		// 어떤 View 페이지로 보여줄지를 담는 변수
-        // 웹에서 어떤 로직을 수행할지를 결정해주는 Command객체 -> 유지보수 및 관리를 위한 분산 처리
-        // 동일한 BCommand 라는 인터페이스를 이용하여 동일한 메소드를 통해 각자 알맞은 로직을 수행하게 만들기위한 객체.
+		// �뼱�뼡 View �럹�씠吏�濡� 蹂댁뿬以꾩�瑜� �떞�뒗 蹂��닔
+        // �쎒�뿉�꽌 �뼱�뼡 濡쒖쭅�쓣 �닔�뻾�븷吏�瑜� 寃곗젙�빐二쇰뒗 Command媛앹껜 -> �쑀吏�蹂댁닔 諛� 愿�由щ�� �쐞�븳 遺꾩궛 泥섎━
+        // �룞�씪�븳 BCommand �씪�뒗 �씤�꽣�럹�씠�뒪瑜� �씠�슜�븯�뿬 �룞�씪�븳 硫붿냼�뱶瑜� �넻�빐 媛곸옄 �븣留욎� 濡쒖쭅�쓣 �닔�뻾�븯寃� 留뚮뱾湲곗쐞�븳 媛앹껜.
 		JsonCommand command = null;
 		
-		String searchUri = request.getRequestURI(); //찾아가는 url
+		String searchUri = request.getRequestURI(); //李얠븘媛��뒗 url
 		String contextPath = request.getContextPath();
 		String commandName = searchUri.substring(contextPath.length());
 		
@@ -199,6 +199,7 @@ public class table extends HttpServlet {
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
 	            viewPage = "select.do";
+<<<<<<< HEAD
 	        }else if(commandName.equals("/createTable.do")) {
 	            command = new BReplyViewCommand();
 	            command.execute(request, response);
@@ -211,15 +212,17 @@ public class table extends HttpServlet {
 	            command = new BReplyCommand();
 	            command.execute(request, response);
 	            viewPage = "list.do";
+=======
+>>>>>>> branch 'main' of https://github.com/junyoung1995/servletTest02.git
 	        }else {
-	            System.out.println("해당 Command 로직이 없습니다.");
+	            System.out.println("�빐�떦 Command 濡쒖쭅�씠 �뾾�뒿�땲�떎.");
 	            viewPage = "notCommand.jsp";
 	        }
 	        
-	        // RequestDispatcher 객체에다가 어떤 View 페이지로 보낼지 맵핑할 곳을 담는다.
+	        // RequestDispatcher 媛앹껜�뿉�떎媛� �뼱�뼡 View �럹�씠吏�濡� 蹂대궪吏� 留듯븨�븷 怨녹쓣 �떞�뒗�떎.
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-	        // 해당 페이지로 포워딩해준다. --> *.do로 받으면 다시 BFrontController로 가서 로직 수행.
-	        // .jsp 로 받으면 해당 View로 화면을 보여준다.
+	        // �빐�떦 �럹�씠吏�濡� �룷�썙�뵫�빐以��떎. --> *.do濡� 諛쏆쑝硫� �떎�떆 BFrontController濡� 媛��꽌 濡쒖쭅 �닔�뻾.
+	        // .jsp 濡� 諛쏆쑝硫� �빐�떦 View濡� �솕硫댁쓣 蹂댁뿬以��떎.
 	        dispatcher.forward(request, response);
 
 	}
