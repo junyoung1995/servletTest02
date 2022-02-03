@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.do")
 public class table extends HttpServlet {
+	private Connection connection;
+	private PreparedStatement preparedStatement;
 	private static final long serialVersionUID = 1L;
 	//commit test
        
@@ -35,7 +37,7 @@ public class table extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doGet�씠�떎.");
+		System.out.println("doGet입니다..");
 		doAction(request, response);
 	}
 
@@ -43,51 +45,8 @@ public class table extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost�씠�떎.");
+		System.out.println("doPost입니다.");
 		doAction(request, response);
-		
-		String reqUrl = request.getRequestURI();
-		String ctxPath = request.getContextPath() + "/jsonTest/";
-		response.setContentType("text/html; charset=utf-8");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
-			conn = DriverManager.getConnection(url, "root", "0000");
-			String query = "create table JsonData.testJson\r\n" + 
-					"(\r\n" + 
-					"	EventID	VARCHAR(30) Not Null primary key,\r\n" + 
-					"	EventType VARCHAR(30) not null,\r\n" + 
-					"	CamID int not null,\r\n" + 
-					"	PlaneID VARCHAR(20) not null,\r\n" + 
-					"	PeriodEnd int not null,\r\n" + 
-					"	PeriodStart int not null,\r\n" + 
-					"	Amount int not null,\r\n" + 
-					"	Reg_DT DateTime not null\r\n" + 
-					")";
-			pstmt = conn.prepareStatement(query);
-		    int n = pstmt.executeUpdate();
-		    System.out.println(n);
-		    response.setContentType("text/html; charset=utf-8");
-			PrintWriter pw = response.getWriter();
-			pw.println("<html>");
-			pw.println("<head></head>");
-			pw.println("<body>");
-			if(n == -1) {
-				pw.println("�뀒�씠釉� �깮�꽦�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
-			}
-			else {
-				pw.println("�뀒�씠釉� �깮�꽦�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
-			}
-			pw.println("</body>");
-		}catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
 	}
 	
 	/**
@@ -163,7 +122,7 @@ public class table extends HttpServlet {
 			System.out.println(e.getMessage());
 		}
 	}
-	private void doAction(HttpServletRequest request, HttpServletResponse response) {
+	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		System.out.println("doAction�쑝濡� �꽆�뼱�솕�떎.");
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -172,9 +131,6 @@ public class table extends HttpServlet {
 		}
 		
 		String viewPage = null;
-		// �뼱�뼡 View �럹�씠吏�濡� 蹂댁뿬以꾩�瑜� �떞�뒗 蹂��닔
-        // �쎒�뿉�꽌 �뼱�뼡 濡쒖쭅�쓣 �닔�뻾�븷吏�瑜� 寃곗젙�빐二쇰뒗 Command媛앹껜 -> �쑀吏�蹂댁닔 諛� 愿�由щ�� �쐞�븳 遺꾩궛 泥섎━
-        // �룞�씪�븳 BCommand �씪�뒗 �씤�꽣�럹�씠�뒪瑜� �씠�슜�븯�뿬 �룞�씪�븳 硫붿냼�뱶瑜� �넻�빐 媛곸옄 �븣留욎� 濡쒖쭅�쓣 �닔�뻾�븯寃� 留뚮뱾湲곗쐞�븳 媛앹껜.
 		JsonCommand command = null;
 		
 		String searchUri = request.getRequestURI(); //李얠븘媛��뒗 url
@@ -185,30 +141,113 @@ public class table extends HttpServlet {
 	            command = new InsertDataCommand();
 	            command.execute(request, response);
 	            viewPage = "insertJson.do";
+	            System.out.println("데이터 삽입");
 	        }else if(commandName.equals("/selectJson.do")) {
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.do";
+	            System.out.println("데이터 조회");
 	        }else if(commandName.equals("/modifyJson.do")) {
 	            command = new ModifyDataCommand();
 	            command.execute(request, response);
 	            viewPage = "modifyJson.do";
+	            System.out.println("데이터 수정");
 	        }else if(commandName.equals("/deleteJson.do")) {
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
 	            viewPage = "deleteJson.do";
+	            System.out.println("데이터 삭제");
 	        }else if(commandName.equals("/createTable.do")) {
-	            command = new CreateTableCommand();
-	            command.execute(request, response);
-	            viewPage = "reply_view.jsp";
+	        	try {
+	    			Class.forName("org.mariadb.jdbc.Driver");
+	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
+	    			connection = DriverManager.getConnection(url, "root", "0000");
+	    			String query = "create table JsonData.testJson\r\n" + 
+	    					"(\r\n" + 
+	    					"	EventID	VARCHAR(30) Not Null primary key,\r\n" + 
+	    					"	EventType VARCHAR(30) not null,\r\n" + 
+	    					"	CamID int not null,\r\n" + 
+	    					"	PlaneID VARCHAR(20) not null,\r\n" + 
+	    					"	PeriodEnd int not null,\r\n" + 
+	    					"	PeriodStart int not null,\r\n" + 
+	    					"	Amount int not null,\r\n" + 
+	    					"	Reg_DT DateTime not null\r\n" + 
+	    					")";
+	    			preparedStatement = connection.prepareStatement(query);
+	    		    int resultCreateTable = preparedStatement.executeUpdate();
+	    		    System.out.println(resultCreateTable);
+	    		    response.setContentType("text/html; charset=utf-8");
+	    			PrintWriter pw = response.getWriter();
+	    			pw.println("<html>");
+	    			pw.println("<head></head>");
+	    			pw.println("<body>");
+	    			if(resultCreateTable == 0) {
+	    				pw.println("테이블이 생성되었습니다.<br/>");
+	    			}
+	    			else {
+	    				pw.println("테이블이 생성되지 않았습니다.<br/>");
+	    			}
+	    			pw.println("</body>");
+	    		}catch(ClassNotFoundException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    		catch(SQLException e) {
+	    			System.out.println(e.getMessage());
+	    		}
 	        }else if(commandName.equals("/deleteTable.do")) {
-	            command = new DeleteTableCommand();
-	            command.execute(request, response);
-	            viewPage = "list.do";
+	        	try {
+	    			Class.forName("org.mariadb.jdbc.Driver");
+	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
+	    			connection = DriverManager.getConnection(url, "root", "0000");
+	    			String query = "Drop table testJson";
+	    			preparedStatement = connection.prepareStatement(query);
+	    		    int resultDropTable = preparedStatement.executeUpdate();
+	    		    System.out.println(resultDropTable);
+	    		    response.setContentType("text/html; charset=utf-8");
+	    			PrintWriter pw = response.getWriter();
+	    			pw.println("<html>");
+	    			pw.println("<head></head>");
+	    			pw.println("<body>");
+	    			if(resultDropTable == -1) {
+	    				pw.println("�뀒�씠釉� �궘�젣�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
+	    			}
+	    			else {
+	    				pw.println("�뀒�씠釉� �궘�젣�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
+	    			}
+	    			pw.println("</body>");
+	    		}catch(ClassNotFoundException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    		catch(SQLException e) {
+	    			System.out.println(e.getMessage());
+	    		}
 	        }else if(commandName.equals("/alterTable.do")) {
-	            command = new AlterTableCommand();
-	            command.execute(request, response);
-	            viewPage = "list.do";
+	        	try {
+	    			Class.forName("org.mariadb.jdbc.Driver");
+	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
+	    			connection = DriverManager.getConnection(url, "root", "0000");
+	    			String query = "Alter table testJson add jbColumn int after Reg_DT";
+	    			preparedStatement = connection.prepareStatement(query);
+	    		    int resultAlterTable = preparedStatement.executeUpdate();
+	    		    System.out.println(resultAlterTable);
+	    		    response.setContentType("text/html; charset=utf-8");
+	    			PrintWriter pw = response.getWriter();
+	    			pw.println("<html>");
+	    			pw.println("<head></head>");
+	    			pw.println("<body>");
+	    			if(resultAlterTable == 1) {
+	    				pw.println("테이블이 수정되었습니다.<br/>");
+	    			}
+	    			else {
+	    				pw.println("테이블이 수정되지 않았습니다.<br/>");
+	    			}
+	    			pw.println("</body>");
+	    		}catch(ClassNotFoundException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    		catch(SQLException e) {
+	    			System.out.println(e.getMessage());
+	    		}
 	        }else {
 	            System.out.println("아무것도 안들어옴");
 	            viewPage = "notCommand.jsp";
@@ -218,7 +257,13 @@ public class table extends HttpServlet {
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 	        // �빐�떦 �럹�씠吏�濡� �룷�썙�뵫�빐以��떎. --> *.do濡� 諛쏆쑝硫� �떎�떆 BFrontController濡� 媛��꽌 濡쒖쭅 �닔�뻾.
 	        // .jsp 濡� 諛쏆쑝硫� �빐�떦 View濡� �솕硫댁쓣 蹂댁뿬以��떎.
-	        dispatcher.forward(request, response);
+	        try {
+				dispatcher.forward(request, response);
+			} catch (ServletException e) {
+				System.out.println(e.getMessage());
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 
 	}
 }
