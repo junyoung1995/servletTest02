@@ -43,7 +43,8 @@ public class JsonDao {
 		
 		try {
 			connection = DriverManager.getConnection(url, id, pw);
-			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Reg_DT) values (?,?,?,?,?,?,?,?)";
+			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Reg_DT) "
+					+ "values (\"evt_1KGBx1GG19GQA0KmX7wRBJ98\",\"invoice.payment_succeeded\",\"138669\",\"doorcam-cloud-plan\",\"1644450027\",\"1641771627\",sysdate)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, EventID);
 			preparedStatement.setString(2, EventType);
