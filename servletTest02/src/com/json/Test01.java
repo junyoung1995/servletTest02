@@ -16,6 +16,7 @@ import org.json.simple.parser.ParseException;
 
 public class Test01 {
 	public static void main(String[] args) {
+		//jar
 		String jsonStr = 
 				"{\"id\":\"evt_1KGBx1GG19GQA0KmX7wRBJ98\","
 				+ "\"object\":\"event\","
