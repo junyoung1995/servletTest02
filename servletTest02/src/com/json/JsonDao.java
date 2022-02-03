@@ -20,9 +20,9 @@ public class JsonDao {
 	public JsonDao() {
 		try {
 			Class.forName(driver);
-			System.out.println("Oracle �뱶�씪�씠踰� 濡쒕뵫 �꽦怨�");
+			System.out.println("마리아DB연동");
 			connection = DriverManager.getConnection(url, id, pw);
-			System.out.println("Connection �깮�꽦 �꽦怨�");
+			System.out.println("Connection 성공");
 		}catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
