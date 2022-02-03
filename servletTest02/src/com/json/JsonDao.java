@@ -37,15 +37,37 @@ public class JsonDao {
 		}
 	}
 	
-	public void insert(String EventID, String EventType, int CamID, String PlaneID, int PeriodEnd, int PeriodStart, int Amount) {
+	public void insertJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount, String Reg_DT) {
 		connection = null;
 		preparedStatement = null;
 		
 		try {
 			connection = DriverManager.getConnection(url, id, pw);
-			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart)";
+			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Reg_DT) values (?,?,?,?,?,?,?,?)";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, EventID);
+			preparedStatement.setString(2, EventType);
+			preparedStatement.setInt(3, Integer.parseInt(CamID));
+			preparedStatement.setString(4, PlaneID);
+			preparedStatement.setInt(5, Integer.parseInt(PeriodEnd));
+			preparedStatement.setInt(6, Integer.parseInt(PeriodStart));
+			preparedStatement.setInt(7, Integer.parseInt(Amount));
+			preparedStatement.setTimestamp(8, Timestamp.valueOf(Reg_DT));
+			int insertResult = preparedStatement.executeUpdate();
+			System.out.println(insertResult);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		}finally {
+			try {
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch(SQLException eFinal) {
+				System.out.println(eFinal.getMessage());
+			}
 		}
 	}
 	
@@ -94,7 +116,7 @@ public class JsonDao {
 			}
 		return jsonDtoList;
 	}
-	public void modify(String EventID, String EventType, int CamID, String PlaneID, int PeriodEnd, int PeriodStart, int Amount) {
+	public void modifyJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount) {
         // TODO Auto-generated method stub
 		connection = null;
 		statement = null;
@@ -102,48 +124,58 @@ public class JsonDao {
  
         try {
             connection = DriverManager.getConnection(url, id, pw);
-            String query = "update mvc_board set EventType=?, CamID=?, PlaneID=?, PerionEnd=?, PeriodStart=?, Amount=? where EventID=?";
+            String query = "update testJson set EventID=? EventType=?, CamID=?, PlaneID=?, PerionEnd=?, PeriodStart=?, Amount=?";
             statement = connection.prepareStatement(query);
-            preparedStatement.setString(1, EventType);
-            preparedStatement.setInt(2, CamID);
-            preparedStatement.setString(3, PlaneID);
-            preparedStatement.setInt(4, Integer.parseInt(PeriodEnd));
-            int result = preparedStatement.executeUpdate();
+            preparedStatement.setString(1, EventID);
+            preparedStatement.setString(2, EventType);
+            preparedStatement.setInt(3, Integer.parseInt(CamID));
+            preparedStatement.setString(4, PlaneID);
+            preparedStatement.setInt(5, Integer.parseInt(PeriodEnd));
+            preparedStatement.setInt(6, Integer.parseInt(PeriodStart));
+            preparedStatement.setInt(7, Integer.parseInt(Amount));
+            int resultModify = preparedStatement.executeUpdate();
+            System.out.println(resultModify);
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: handle exception
         }finally {
             try {
-                if(preparedStatement != null) preparedStatement.close();
-                if(connection != null) connection.close();
-            } catch (Exception e2) {
-                // TODO: handle exception
-                e2.printStackTrace();
+                if(preparedStatement != null) {
+                	preparedStatement.close();
+                }
+                if(connection != null) {
+                	connection.close();
+                }
+            } catch (SQLException eFinal) {
+                System.out.println(eFinal.getMessage());
             }
         }
     }
  
-    public void delete(String bId) {
-        // TODO Auto-generated method stub
-        Connection conn = null;
-        PreparedStatement pstmt = null;
+    public void deleteJson(String EventID) {
+
+        connection = null;
+        preparedStatement = null;
         
         try {
-            conn = dataSource.getConnection();
-            String query = "delete from mvc_board where bId=?";
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(bId));
-            int result = pstmt.executeUpdate();
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
+        	connection = dataSource.getConnection();
+            String query = "delete from testJson where EventID=?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, EventID);
+            int resultDelete = preparedStatement.executeUpdate();
+            System.out.println(resultDelete);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         } finally {
             try {
-                if(pstmt != null) pstmt.close();
-                if(conn != null) conn.close();
-            } catch (Exception e2) {
-                // TODO: handle exception
-                e2.printStackTrace();
+                if(preparedStatement != null) {
+                	preparedStatement.close();
+                }
+                if(connection != null) {
+                	connection.close();
+                }
+            } catch (SQLException eFinal) {
+                System.out.println(eFinal.getMessage());
             }
         }
     }

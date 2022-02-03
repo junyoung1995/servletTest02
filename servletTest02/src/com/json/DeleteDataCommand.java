@@ -8,7 +8,8 @@ public class DeleteDataCommand implements JsonCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
+		JsonDao jsonDao = new JsonDao();
+		jsonDao.deleteJson(request.getParameter("EventID"));
 	}
 
 }
