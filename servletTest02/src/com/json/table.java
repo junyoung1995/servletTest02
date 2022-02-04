@@ -145,7 +145,7 @@ public class table extends HttpServlet {
 	        }else if(commandName.equals("/selectJson.do")) {
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
-	            viewPage = "selectJson.do";
+	            viewPage = "selectJson.jsp";
 	            System.out.println("데이터 조회");
 	        }else if(commandName.equals("/modifyJson.do")) {
 	            command = new ModifyDataCommand();

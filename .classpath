@@ -33,5 +33,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/odc/Desktop/json-20211205.jar"/>
+	<classpathentry kind="lib" path="C:/Users/odc/Desktop/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/odc/Desktop/standard.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
