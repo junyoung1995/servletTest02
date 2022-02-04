@@ -50,7 +50,7 @@ public class table extends HttpServlet {
 	}
 
 	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		System.out.println("doAction�쑝濡� �꽆�뼱�솕�떎.");
+		System.out.println("doAction입니다.");
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
