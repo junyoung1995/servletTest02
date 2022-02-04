@@ -2,7 +2,6 @@ package com.json;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,7 +36,7 @@ public class table extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doGet입니다..");
+		System.out.println("doGet입니다.");
 		doAction(request, response);
 	}
 
@@ -45,46 +44,44 @@ public class table extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost입니다.");
-		doAction(request, response);
-	}
+        // TODO Auto-generated method stub
+        System.out.println("doPost");
+        doAction(request, response);
+    }
 
 	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("doAction입니다.");
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			System.out.println(e.getMessage());
-		}
+		request.setCharacterEncoding("UTF-8");
 		
 		String viewPage = null;
 		JsonCommand command = null;
 		
-		String searchUri = request.getRequestURI(); //李얠븘媛��뒗 url
+		String requestUri = request.getRequestURI(); 
 		String contextPath = request.getContextPath();
-		String commandName = searchUri.substring(contextPath.length());
+		String commandName = viewPage.substring(contextPath.length());
 		
 		   if(commandName.equals("/insertJson.do")) {
+			    System.out.println("데이터 삽입");
 	            command = new InsertDataCommand();
 	            command.execute(request, response);
-	            viewPage = "insertJson.do";
-	            System.out.println("데이터 삽입");
+	            viewPage = "selectJson.do";
 	        }else if(commandName.equals("/selectJson.do")) {
+	        	System.out.println("데이터 조회");
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.jsp";
-	            System.out.println("데이터 조회");
 	        }else if(commandName.equals("/modifyJson.do")) {
+	        	System.out.println("데이터 수정");
 	            command = new ModifyDataCommand();
 	            command.execute(request, response);
-	            viewPage = "modifyJson.do";
-	            System.out.println("데이터 수정");
+	            viewPage = "selectJson.do";
 	        }else if(commandName.equals("/deleteJson.do")) {
+	        	System.out.println("데이터 삭제");
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
-	            viewPage = "deleteJson.do";
-	            System.out.println("데이터 삭제");
+	            viewPage = "selectJson.do";
 	        }else if(commandName.equals("/createTable.do")) {
+	        	System.out.println("테이블 생성");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
 	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
@@ -122,6 +119,7 @@ public class table extends HttpServlet {
 	    			System.out.println(e.getMessage());
 	    		}
 	        }else if(commandName.equals("/deleteTable.do")) {
+	        	System.out.println("테이블 삭제");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
 	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
@@ -149,6 +147,7 @@ public class table extends HttpServlet {
 	    			System.out.println(e.getMessage());
 	    		}
 	        }else if(commandName.equals("/alterTable.do")) {
+	        	System.out.println("데이터 수정");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
 	    			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
@@ -179,8 +178,8 @@ public class table extends HttpServlet {
 	            System.out.println("아무것도 안들어옴");
 	            viewPage = "notCommand.jsp";
 	        }
-	        
-	        // RequestDispatcher 媛앹껜�뿉�떎媛� �뼱�뼡 View �럹�씠吏�濡� 蹂대궪吏� 留듯븨�븷 怨녹쓣 �떞�뒗�떎.
+	        //RequestDispatcher 객체에 어떤 View 페이지로 보낼 지 맵핑하는 곳이다.
+		   //해당 페이지로 포워딩 해준다.
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 	        dispatcher.forward(request, response);
 	}
