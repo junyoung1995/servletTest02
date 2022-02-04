@@ -1,5 +1,6 @@
 package com.json;
 
+import java.lang.Character.Subset;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.do")
 public class table extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	private Connection connection;
 	private PreparedStatement preparedStatement;
-	private static final long serialVersionUID = 1L;
 	//commit test
        
     /**
@@ -45,42 +46,48 @@ public class table extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        System.out.println("doPost");
+        System.out.println("doPost이다.");
         doAction(request, response);
     }
 
 	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("doAction입니다.");
+		System.out.println(request.getMethod());
 		request.setCharacterEncoding("UTF-8");
-		
+		System.out.println("여긴 어디?");
 		String viewPage = null;
+		System.out.println("여긴 어디??");
 		JsonCommand command = null;
+		System.out.println("여긴 어디???");
 		
-		String requestUri = request.getRequestURI(); 
+		String requestUri = request.getRequestURI();
+		System.out.println("여긴 어디????");
 		String contextPath = request.getContextPath();
+		System.out.println("여긴 어디?????");
 		String commandName = viewPage.substring(contextPath.length());
+		System.out.println("여긴 어디??????");
 		
-		   if(commandName.equals("/insertJson.do")) {
+		   if(commandName.equals("/jsonTest/Database/Table/Data/Json/insertJson.do")) {
 			    System.out.println("데이터 삽입");
 	            command = new InsertDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.do";
-	        }else if(commandName.equals("/selectJson.do")) {
+	        }else if(commandName.equals("/jsonTest/Database/Table/Data/Json/selectJson.do")) {
 	        	System.out.println("데이터 조회");
 	            command = new SelectDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.jsp";
-	        }else if(commandName.equals("/modifyJson.do")) {
+	        }else if(commandName.equals("/jsonTest/Database/Table/Data/Json/modifyJson.do")) {
 	        	System.out.println("데이터 수정");
 	            command = new ModifyDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.do";
-	        }else if(commandName.equals("/deleteJson.do")) {
+	        }else if(commandName.equals("/djsonTest/Database/Table/Data/Json/deleteJson.do")) {
 	        	System.out.println("데이터 삭제");
 	            command = new DeleteDataCommand();
 	            command.execute(request, response);
 	            viewPage = "selectJson.do";
-	        }else if(commandName.equals("/createTable.do")) {
+	        }else if(commandName.equals("/jsonTest/Database/Table/createTable.do")) {
 	        	System.out.println("테이블 생성");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
@@ -118,7 +125,7 @@ public class table extends HttpServlet {
 	    		catch(SQLException e) {
 	    			System.out.println(e.getMessage());
 	    		}
-	        }else if(commandName.equals("/deleteTable.do")) {
+	        }else if(commandName.equals("/jsonTest/Database/Table/deleteTable.do")) {
 	        	System.out.println("테이블 삭제");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
@@ -146,7 +153,7 @@ public class table extends HttpServlet {
 	    		catch(SQLException e) {
 	    			System.out.println(e.getMessage());
 	    		}
-	        }else if(commandName.equals("/alterTable.do")) {
+	        }else if(commandName.equals("/jsonTest/Database/Table/alterTable.do")) {
 	        	System.out.println("데이터 수정");
 	        	try {
 	    			Class.forName("org.mariadb.jdbc.Driver");
