@@ -48,81 +48,8 @@ public class table extends HttpServlet {
 		System.out.println("doPost입니다.");
 		doAction(request, response);
 	}
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getParameter("patchTable");
-		response.setContentType("text/html; charset=utf-8");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
-			conn = DriverManager.getConnection(url, "root", "0000");
-			String query = "Alter table testJson add jbColumn int after Reg_DT";
-			pstmt = conn.prepareStatement(query);
-		    int n = pstmt.executeUpdate();
-		    System.out.println(n);
-		    response.setContentType("text/html; charset=utf-8");
-			PrintWriter pw = response.getWriter();
-			pw.println("<html>");
-			pw.println("<head></head>");
-			pw.println("<body>");
-			if(n == 1) {
-				pw.println("�뀒�씠釉� �닔�젙�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
-			}
-			else {
-				pw.println("�뀒�씠釉� �닔�젙�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
-			}
-			pw.println("</body>");
-		}catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getParameter("deleteTable");
-		response.setContentType("text/html; charset=utf-8");
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
-			conn = DriverManager.getConnection(url, "root", "0000");
-			String query = "Drop table testJson";
-			pstmt = conn.prepareStatement(query);
-		    int n = pstmt.executeUpdate();
-		    System.out.println(n);
-		    response.setContentType("text/html; charset=utf-8");
-			PrintWriter pw = response.getWriter();
-			pw.println("<html>");
-			pw.println("<head></head>");
-			pw.println("<body>");
-			if(n == -1) {
-				pw.println("�뀒�씠釉� �궘�젣�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
-			}
-			else {
-				pw.println("�뀒�씠釉� �궘�젣�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
-			}
-			pw.println("</body>");
-		}catch(ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		catch(SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doAction(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		System.out.println("doAction�쑝濡� �꽆�뼱�솕�떎.");
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -255,15 +182,6 @@ public class table extends HttpServlet {
 	        
 	        // RequestDispatcher 媛앹껜�뿉�떎媛� �뼱�뼡 View �럹�씠吏�濡� 蹂대궪吏� 留듯븨�븷 怨녹쓣 �떞�뒗�떎.
 	        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-	        // �빐�떦 �럹�씠吏�濡� �룷�썙�뵫�빐以��떎. --> *.do濡� 諛쏆쑝硫� �떎�떆 BFrontController濡� 媛��꽌 濡쒖쭅 �닔�뻾.
-	        // .jsp 濡� 諛쏆쑝硫� �빐�떦 View濡� �솕硫댁쓣 蹂댁뿬以��떎.
-	        try {
-				dispatcher.forward(request, response);
-			} catch (ServletException e) {
-				System.out.println(e.getMessage());
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
-
+	        dispatcher.forward(request, response);
 	}
 }
