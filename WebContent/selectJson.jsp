@@ -33,7 +33,7 @@
 	    </tr>
 	    </c:forEach>
 	    <tr>
-	        <td colspan="5"><a href="write_view.do">글작성</a></td>
+	        <td colspan="5"><a href="table.html">버튼 다시 누르기</a></td>
 	    </tr>
 	</table>
 </body>
