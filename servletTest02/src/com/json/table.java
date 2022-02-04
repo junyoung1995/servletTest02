@@ -209,10 +209,10 @@ public class table extends HttpServlet {
 	    			pw.println("<head></head>");
 	    			pw.println("<body>");
 	    			if(resultDropTable == -1) {
-	    				pw.println("�뀒�씠釉� �궘�젣�뿉 �꽦怨듯븯���뒿�땲�떎.<br/>");
+	    				pw.println("테이블이 삭제되었습니다.<br/>");
 	    			}
 	    			else {
-	    				pw.println("�뀒�씠釉� �궘�젣�뿉 �떎�뙣�븯���뒿�땲�떎.<br/>");
+	    				pw.println("테이블이 삭제되지 않았습니다.<br/>");
 	    			}
 	    			pw.println("</body>");
 	    		}catch(ClassNotFoundException e) {
