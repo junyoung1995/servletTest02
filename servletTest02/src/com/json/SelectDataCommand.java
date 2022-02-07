@@ -11,7 +11,7 @@ import com.json.JsonDto;
 public class SelectDataCommand implements JsonCommand {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request  ) {
 		// TODO Auto-generated method stub
 		JsonDao jsonDao = new JsonDao();
 		ArrayList<JsonDto> jsonDto = jsonDao.jsonSelect();

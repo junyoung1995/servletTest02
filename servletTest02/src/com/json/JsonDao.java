@@ -16,7 +16,7 @@ public class JsonDao {
 	DataSource dataSource;
 	
 	private String driver = "org.mariadb.jdbc.Driver";
-	private String url = "jdbc:mariadb://127.0.0.1:3306/";
+	private String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
 	private String id = "root";
 	private String pw = "0000";
 	private Connection connection;
@@ -43,17 +43,18 @@ public class JsonDao {
 		
 		try {
 			connection = DriverManager.getConnection(url, id, pw);
-			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Reg_DT) "
-					+ "values (\"evt_1KGBx1GG19GQA0KmX7wRBJ98\",\"invoice.payment_succeeded\",\"138669\",\"doorcam-cloud-plan\",\"1644450027\",\"1641771627\",sysdate)";
+			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT) "
+					+ "values (\"evt_1KGBx1GG19GQA0KmX7wRBJ98\",\"invoice.payment_succeeded\",\"138669\",\"doorcam-cloud-plan\",\"1644450027\",\"1641771627\",0,\"2020-02-07\")";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, EventID);
-			preparedStatement.setString(2, EventType);
-			preparedStatement.setInt(3, Integer.parseInt(CamID));
-			preparedStatement.setString(4, PlaneID);
-			preparedStatement.setInt(5, Integer.parseInt(PeriodEnd));
-			preparedStatement.setInt(6, Integer.parseInt(PeriodStart));
-			preparedStatement.setInt(7, Integer.parseInt(Amount));
-			preparedStatement.setTimestamp(8, Timestamp.valueOf(Reg_DT));
+			/*
+			 * preparedStatement.setString(1, EventID); preparedStatement.setString(2,
+			 * EventType); preparedStatement.setInt(3, Integer.parseInt(CamID));
+			 * preparedStatement.setString(4, PlaneID); preparedStatement.setInt(5,
+			 * Integer.parseInt(PeriodEnd)); preparedStatement.setInt(6,
+			 * Integer.parseInt(PeriodStart)); preparedStatement.setInt(7,
+			 * Integer.parseInt(Amount)); preparedStatement.setTimestamp(8,
+			 * Timestamp.valueOf(Reg_DT));
+			 */
 			int insertResult = preparedStatement.executeUpdate();
 			System.out.println(insertResult);
 		} catch (SQLException e) {

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ModifyDataCommand implements JsonCommand {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request  ) {
 		String EventID = request.getParameter("EventID");
 		String EventType = request.getParameter("EventType");
 		String CamID = request.getParameter("CamID");
