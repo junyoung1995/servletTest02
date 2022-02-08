@@ -2,10 +2,6 @@ package com.json.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,11 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.json.command.AlterTableCommand;
 import com.json.command.CreateTableCommand;
@@ -27,7 +18,6 @@ import com.json.command.InsertDataCommand;
 import com.json.command.JsonCommand;
 import com.json.command.ModifyDataCommand;
 import com.json.command.SelectDataCommand;
-import com.json.jsonparse.JsonParse;
 
 /**
  * Servlet implementation class table
@@ -35,8 +25,6 @@ import com.json.jsonparse.JsonParse;
 @WebServlet("jsonTest/Database/*")
 public class DBController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Connection connection;
-	private PreparedStatement preparedStatement;
 	//commit test
        
     /**
