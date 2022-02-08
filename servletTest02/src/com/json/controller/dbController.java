@@ -24,7 +24,7 @@ import com.json.command.SelectDataCommand;
  * Servlet implementation class table
  */
 @WebServlet("jsonTest/Database/*")
-public class table extends HttpServlet {
+public class dbController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection;
 	private PreparedStatement preparedStatement;
@@ -33,7 +33,7 @@ public class table extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public table() {
+    public dbController() {
         super();
         // TODO Auto-generated constructor stub
     }
