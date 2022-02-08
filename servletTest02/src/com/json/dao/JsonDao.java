@@ -1,5 +1,6 @@
 package com.json.dao;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -38,11 +39,9 @@ public class JsonDao {
 	}
 	
 	public void insertJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount, String Reg_DT) {
-		connection = null;
 		preparedStatement = null;
 		
-		try {
-			connection = DriverManager.getConnection(url, id, pw);
+		try {;
 			String query = "insert into testJson (EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT) "
 					+ "values (\"evt_1KGBx1GG19GQA0KmX7wRBJ98\",\"invoice.payment_succeeded\",\"138669\",\"doorcam-cloud-plan\",\"1644450027\",\"1641771627\",0,\"2020-02-07\")";
 			preparedStatement = connection.prepareStatement(query);
@@ -82,7 +81,6 @@ public class JsonDao {
 		resultSet = null;
 		
 		try {
-			connection = DriverManager.getConnection(url, id, pw);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery("select * from testJson");
 			
@@ -120,13 +118,10 @@ public class JsonDao {
 	}
 	
 	public void modifyJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount) {
-        // TODO Auto-generated method stub
-		connection = null;
 		statement = null;
 		resultSet = null;
  
         try {
-            connection = DriverManager.getConnection(url, id, pw);
             String query = "update testJson set EventID=? EventType=?, CamID=?, PlaneID=?, PerionEnd=?, PeriodStart=?, Amount=?";
             statement = connection.prepareStatement(query);
             preparedStatement.setString(1, EventID);
@@ -156,12 +151,9 @@ public class JsonDao {
     }
  
     public void deleteJson(String EventID) {
-
-        connection = null;
         preparedStatement = null;
         
         try {
-        	connection = dataSource.getConnection();
             String query = "delete from testJson where EventID=?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, EventID);
@@ -181,5 +173,52 @@ public class JsonDao {
                 System.out.println(eFinal.getMessage());
             }
         }
+    }
+    
+    public void createTable() {
+    	System.out.println("테이블 생성");
+
+    	try {
+			String query = "create table JsonData.testJson\r\n" + 
+					"(\r\n" + 
+					"	EventID	VARCHAR(30) Not Null primary key,\r\n" + 
+					"	EventType VARCHAR(30) not null,\r\n" + 
+					"	CamID int not null,\r\n" + 
+					"	PlaneID VARCHAR(20) not null,\r\n" + 
+					"	PeriodEnd int not null,\r\n" + 
+					"	PeriodStart int not null,\r\n" + 
+					"	Amount int not null,\r\n" + 
+					"	Reg_DT DateTime not null\r\n" + 
+					")";
+			preparedStatement = connection.prepareStatement(query);
+		    int resultCreateTable = preparedStatement.executeUpdate();
+		    System.out.println(resultCreateTable);
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+    }
+    public void DropTable() {
+    	System.out.println("테이블 삭제");
+    	try {
+			String query = "Drop table testJson";
+			preparedStatement = connection.prepareStatement(query);
+			
+		    int resultDropTable = preparedStatement.executeUpdate();
+		    
+		    System.out.println(resultDropTable);
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+    }
+    public void AlterTable() {
+    	System.out.println("테이블 수정 완료");
+    	try {
+			String query = "Alter table testJson add jbColumn int after Reg_DT";
+			preparedStatement = connection.prepareStatement(query);
+		    int resultAlterTable = preparedStatement.executeUpdate();
+		    System.out.println(resultAlterTable);
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
     }
 }
