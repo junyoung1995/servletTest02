@@ -33,7 +33,7 @@ import com.json.jsonparse.JsonParse;
  * Servlet implementation class table
  */
 @WebServlet("jsonTest/Database/*")
-public class dbController extends HttpServlet {
+public class DBController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection;
 	private PreparedStatement preparedStatement;
@@ -42,7 +42,7 @@ public class dbController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public dbController() {
+    public DBController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -128,13 +128,8 @@ public class dbController extends HttpServlet {
         	command.execute(request);
         	PrintWriter result = response.getWriter();
         	result.print("테이블 생성 완료");
-        }else if(URI.equals("/servletTest02/jsonTest/Database/data")) {
-        	System.out.println("jsonData 파싱 uri");
-        	PrintWriter result = response.getWriter();
-        	result.print("json 파싱 완료");
         }else if(URI.equals("/servletTest02/jsonTest/Database/Row")) {
         	System.out.println("데이터 삽입 uri");
-        	
             command = new InsertDataCommand();
             command.execute(request);
             PrintWriter result = response.getWriter();

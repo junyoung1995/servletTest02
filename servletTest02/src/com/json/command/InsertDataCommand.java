@@ -2,21 +2,22 @@ package com.json.command;
 
 import javax.servlet.http.HttpServletRequest;
 import com.json.dao.JsonDao;
+import com.json.dto.JsonDto;
+import com.json.jsonparse.JsonParse;
 
 public class InsertDataCommand implements JsonCommand {
 
 	@Override
-	public void execute(HttpServletRequest request  ) {
-		String EventID = request.getParameter("EventID");
-		String EventType = request.getParameter("EventType");
-		String CamID = request.getParameter("CamID");
-		String PlaneID = request.getParameter("PlaneID");
-		String PeriodEnd = request.getParameter("PeriodEnd");
-		String PeriodStart = request.getParameter("PeriodStart");
-		String Amount = request.getParameter("Amount");
-		String Reg_DT = request.getParameter("Reg_DT");
+	public void execute(HttpServletRequest request ) {
+		// get JsonString from reqeust
+		JsonParse jsonParse = new JsonParse();
+		// call Function(JsonString);
+		// return DTO
+		JsonDto jsonDto = jsonParse.execute(request);
 		
+		// throw DTO to insertJson();
 		JsonDao jsonDao = new JsonDao();
-		jsonDao.insertJson(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT);
+		jsonDao.insertJson(jsonDto);
 	}
+
 }

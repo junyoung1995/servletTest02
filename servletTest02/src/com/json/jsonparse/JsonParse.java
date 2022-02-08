@@ -1,19 +1,17 @@
 package com.json.jsonparse;
 
+import java.sql.Timestamp;
 import javax.servlet.http.HttpServletRequest;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.json.command.JsonCommand;
-import com.json.dao.JsonDao;
+import com.json.dto.JsonDto;
 
-public class JsonParse implements JsonCommand {
+public class JsonParse {
 
-	@Override
-	public void execute(HttpServletRequest request) {
+	public static JsonDto execute(HttpServletRequest request) {
 		System.out.println("jsonData 파싱 uri");
     	
 		String jsonStr = request.getParameter("jsonParameter");
@@ -47,14 +45,19 @@ public class JsonParse implements JsonCommand {
 		jsonOutput.put("period_end", period.get("end"));
 		jsonOutput.put("event_type", jsonObj.get("type"));
 		
-		request.setAttribute("EventID", jsonObj.get("id"));
-		request.setAttribute("EventType", jsonObj.get("type"));
-		request.setAttribute("CamID", metadata.get("cam_id"));
-		request.setAttribute("PlaneID", plan.get("id"));
-		request.setAttribute("PeriodEnd", period.get("end"));
-		request.setAttribute("PeriodStart", period.get("start"));
-		request.setAttribute("Amount", arrData.get("amount"));
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
+		String EventID = (String) jsonObj.get("id");
+		String EventType = (String) jsonObj.get("type");
+		int CamID = (int) metadata.get("cam_id");
+		String PlaneID = (String) plan.get("id");
+		int PeriodEnd = (int) period.get("end");
+		int PeriodStart = (int) period.get("start");
+		int Amount = (int) arrData.get("amount");
+		Timestamp Reg_DT = currentTime; 
 		
+		JsonDto jsonDto = new JsonDto(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT);
+		return jsonDto;
+
 	}
 }

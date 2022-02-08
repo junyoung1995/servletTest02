@@ -18,13 +18,13 @@ import org.json.simple.parser.ParseException;
  * Servlet implementation class jsonTest
  */
 @WebServlet("jsonTest")
-public class jsonTest extends HttpServlet {
+public class JsonTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public jsonTest() {
+    public JsonTest() {
         super();
         // TODO Auto-generated constructor stub
     }
