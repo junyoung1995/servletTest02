@@ -1,4 +1,4 @@
-package com.json;
+package com.json.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,18 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javax.sql.DataSource;
-
+import com.json.dto.JsonDto;
 import java.sql.Timestamp;
 
 public class JsonDao {
 	DataSource dataSource;
 	
-	private String driver = "org.mariadb.jdbc.Driver";
+	private final String driver = "org.mariadb.jdbc.Driver";
 	private String url = "jdbc:mariadb://127.0.0.1:3306/jsondata";
 	private String id = "root";
 	private String pw = "0000";
+
 	private Connection connection;
 	private Statement statement;
 	private PreparedStatement preparedStatement;
@@ -118,6 +118,7 @@ public class JsonDao {
 			}
 		return jsonDtoList;
 	}
+	
 	public void modifyJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount) {
         // TODO Auto-generated method stub
 		connection = null;

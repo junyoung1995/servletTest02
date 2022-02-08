@@ -1,12 +1,12 @@
-package com.json;
+package com.json.command;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.json.JsonDao;
-import com.json.JsonDto;
+import com.json.dao.JsonDao;
+import com.json.dto.JsonDto;
 
 public class SelectDataCommand implements JsonCommand {
 

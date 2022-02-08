@@ -1,4 +1,4 @@
-package com.json;
+package testPackage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

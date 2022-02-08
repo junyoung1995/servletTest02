@@ -1,10 +1,8 @@
-package com.json;
+package com.json.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,12 +42,18 @@ public class jsonTest extends HttpServlet {
 	 */
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		request.getContextPath();
+		
 		System.out.println(request.getMethod());
+		
 		String jsonStr = request.getParameter("jsonParameter");
+		
 		System.out.println(jsonStr);
+		
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObj = null;
+		
 		try {
 			jsonObj = (JSONObject)parser.parse(jsonStr);
 			System.out.println(jsonObj);

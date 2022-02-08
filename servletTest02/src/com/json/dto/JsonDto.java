@@ -1,4 +1,4 @@
-package com.json;
+package com.json.dto;
 
 import java.sql.Timestamp;
 
@@ -13,9 +13,7 @@ public class JsonDto {
 	private int Amount;
 	private Timestamp Reg_DT;
 	
-	public JsonDto() {
-		
-	}
+	public JsonDto() {	}
 	
 	public JsonDto(String EventID, String EventType, int CamID,
 			String PlaneID, int PeriodEnd, int PeriodStart, 

@@ -1,7 +1,9 @@
-package com.json;
+package com.json.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.json.dao.JsonDao;
 
 public class DeleteDataCommand implements JsonCommand {
 
