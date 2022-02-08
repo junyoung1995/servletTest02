@@ -27,6 +27,7 @@ import com.json.command.InsertDataCommand;
 import com.json.command.JsonCommand;
 import com.json.command.ModifyDataCommand;
 import com.json.command.SelectDataCommand;
+import com.json.jsonparse.JsonParse;
 
 /**
  * Servlet implementation class table
@@ -129,7 +130,6 @@ public class dbController extends HttpServlet {
         	result.print("테이블 생성 완료");
         }else if(URI.equals("/servletTest02/jsonTest/Database/data")) {
         	System.out.println("jsonData 파싱 uri");
-        	
         	PrintWriter result = response.getWriter();
         	result.print("json 파싱 완료");
         }else if(URI.equals("/servletTest02/jsonTest/Database/Row")) {

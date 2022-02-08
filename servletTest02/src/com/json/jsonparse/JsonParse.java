@@ -7,8 +7,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class JsonParse {
-	public JsonParse(HttpServletRequest request) {
+import com.json.command.JsonCommand;
+import com.json.dao.JsonDao;
+
+public class JsonParse implements JsonCommand {
+
+	@Override
+	public void execute(HttpServletRequest request) {
+		System.out.println("jsonData 파싱 uri");
+    	
 		String jsonStr = request.getParameter("jsonParameter");
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObj = null;
@@ -30,8 +37,8 @@ public class JsonParse {
 		JSONObject plan = (JSONObject)arrData.get("plan");
 		JSONObject metadata = (JSONObject)arrData.get("metadata");
 		JSONObject period = (JSONObject)arrData.get("period");
-		
 		JSONObject jsonOutput = new JSONObject();
+		
 		jsonOutput.put("event_id", jsonObj.get("id"));
 		jsonOutput.put("cam_id", metadata.get("cam_id"));
 		jsonOutput.put("plane_id", plan.get("id"));
@@ -47,5 +54,7 @@ public class JsonParse {
 		request.setAttribute("PeriodEnd", period.get("end"));
 		request.setAttribute("PeriodStart", period.get("start"));
 		request.setAttribute("Amount", arrData.get("amount"));
+		
+		
 	}
 }
