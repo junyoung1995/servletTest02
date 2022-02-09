@@ -20,16 +20,16 @@
 	        <th>Amount</th>
 	        <th>Reg_DT</th>
 	    </tr>
-	    <c:forEach items="${ command }" var="seleteJson" >
+	    <c:forEach items="${ jsonSelect }" var="jsonDto" >
 	    <tr>
-	        <td>${ seleteJson.EventID }</td>
-	        <td>${ seleteJson.EventType }</td>
-	        <td>${ seleteJson.CamID }</td>
-	        <td>${ seleteJson.PlaneID }</td>
-	        <td>${ seleteJson.PeriodEnd }</td>
-	        <td>${ seleteJson.PeriodStart }</td>
-	        <td>${ seleteJson.Amount }</td>
-	        <td>${ seleteJson.Reg_DT }</td>
+	        <td>${ jsonDto.eventID }</td>
+	        <td>${ jsonDto.eventType }</td>
+	        <td>${ jsonDto.camID }</td>
+	        <td>${ jsonDto.planeID }</td>
+	        <td>${ jsonDto.periodEnd }</td>
+	        <td>${ jsonDto.periodStart }</td>
+	        <td>${ jsonDto.amount }</td>
+	        <td>${ jsonDto.reg_DT }</td>
 	    </tr>
 	    </c:forEach>
 	    <tr>

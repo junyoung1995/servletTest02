@@ -53,7 +53,6 @@ public class DBController extends HttpServlet {
             
         	command = new SelectDataCommand();
             command.execute(request);
-            request.setAttribute("seleteJson", command);
             viewPage = "selectJson.jsp";
             ServletContext jsonJsp = this.getServletContext();
             RequestDispatcher dispatcher = jsonJsp.getRequestDispatcher("/selectJson.jsp");
