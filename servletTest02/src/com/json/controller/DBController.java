@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,16 +53,22 @@ public class DBController extends HttpServlet {
             
         	command = new SelectDataCommand();
             command.execute(request);
-            
+            request.setAttribute("seleteJson", command);
             viewPage = "selectJson.jsp";
+            ServletContext jsonJsp = this.getServletContext();
+            RequestDispatcher dispatcher = jsonJsp.getRequestDispatcher("/selectJson.jsp");
+            try {
+            	dispatcher.forward(request, response);
+            }catch(ServletException selectE) {
+            	System.out.println(String.format("오류 메세지 = %s", selectE.getMessage()));
+            }
+            
         }else {
             System.out.println("아무것도 안들어옴");
             
             viewPage = "notCommand.jsp";
+            
         }
-		
-        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-        dispatcher.forward(request, response);
 	}
 
 	/**
@@ -86,12 +93,14 @@ public class DBController extends HttpServlet {
         	command.execute(request);
         	PrintWriter result = response.getWriter();
         	result.print("테이블 삭제 완료");
+        	result.close();
         }else if(URI.equals("/servletTest02/jsonTest/Database/Row")) {
         	System.out.println("데이터 삭제");
             command = new DeleteDataCommand();
             command.execute(request);
             PrintWriter result = response.getWriter();
         	result.print("데이터 삭제 완료");
+        	result.close();
         }else {
             System.out.println("아무것도 안들어옴");
             viewPage = "notCommand.jsp";
@@ -116,12 +125,14 @@ public class DBController extends HttpServlet {
         	command.execute(request);
         	PrintWriter result = response.getWriter();
         	result.print("테이블 생성 완료");
+        	result.close();
         }else if(URI.equals("/servletTest02/jsonTest/Database/Row")) {
         	System.out.println("데이터 삽입 uri");
             command = new InsertDataCommand();
             command.execute(request);
             PrintWriter result = response.getWriter();
         	result.print("데이터 생성 완료");
+        	result.close();
         }else {
             System.out.println("아무것도 안들어옴");
             viewPage = "notCommand.jsp";
@@ -142,12 +153,14 @@ public class DBController extends HttpServlet {
         	command.execute(request);
         	PrintWriter result = response.getWriter();
         	result.print("테이블 수정 완료");
+        	result.close();
         }else if(URI.equals("/servletTest02/jsonTest/Database/Row")) {
         	System.out.println("데이터 수정");
             command = new ModifyDataCommand();
             command.execute(request);
             PrintWriter result = response.getWriter();
         	result.print("데이터 수정 완료");
+        	result.close();
         }else {
             System.out.println("아무것도 안들어옴");
             viewPage = "notCommand.jsp";

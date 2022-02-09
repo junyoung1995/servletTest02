@@ -31,7 +31,6 @@ public class JsonParse {
 		JSONObject lines = (JSONObject)object.get("lines");
 		JSONArray linesData = (JSONArray)lines.get("data");
 		JSONObject arrData = (JSONObject)linesData.get(0);
-		
 		JSONObject plan = (JSONObject)arrData.get("plan");
 		JSONObject metadata = (JSONObject)arrData.get("metadata");
 		JSONObject period = (JSONObject)arrData.get("period");
@@ -47,13 +46,19 @@ public class JsonParse {
 		
 		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 		
+		System.out.println(String.format("period=%s", period.get("end")));
+		
+		
+		long temp = (long) period.get("end");
+		int PeriodEndTemp = 2147483647;
+	
 		String EventID = (String) jsonObj.get("id");
 		String EventType = (String) jsonObj.get("type");
-		int CamID = (int) metadata.get("cam_id");
+		String CamID = (String) metadata.get("cam_id");
 		String PlaneID = (String) plan.get("id");
-		int PeriodEnd = (int) period.get("end");
-		int PeriodStart = (int) period.get("start");
-		int Amount = (int) arrData.get("amount");
+		long PeriodEnd = (long) period.get("end");
+		long PeriodStart = (long) period.get("start");
+		long Amount = (long) arrData.get("amount");
 		Timestamp Reg_DT = currentTime; 
 		
 		JsonDto jsonDto = new JsonDto(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT);

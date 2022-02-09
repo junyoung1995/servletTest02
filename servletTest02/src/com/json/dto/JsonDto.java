@@ -6,18 +6,18 @@ public class JsonDto {
 	//json데이터
 	private String EventID;
 	private String EventType;
-	private int CamID;
+	private String CamID;
 	private String PlaneID;
-	private int PeriodEnd;
-	private int PeriodStart;
-	private int Amount;
+	private long PeriodEnd;
+	private long PeriodStart;
+	private long Amount;
 	private Timestamp Reg_DT;
 	
 	public JsonDto() {	}
 	
-	public JsonDto(String EventID, String EventType, int CamID,
-			String PlaneID, int PeriodEnd, int PeriodStart, 
-			int Amount, Timestamp Reg_DT) {
+	public JsonDto(String EventID, String EventType, String CamID,
+			String PlaneID, long PeriodEnd, long PeriodStart, 
+			long Amount, Timestamp Reg_DT) {
 		this.EventID = EventID;
 		this.EventType = EventType;
 		this.CamID = CamID;
@@ -40,10 +40,10 @@ public class JsonDto {
 	public void setEventType(String eventType) {
 		EventType = eventType;
 	}
-	public int getCamID() {
+	public String getCamID() {
 		return CamID;
 	}
-	public void setCamID(int camID) {
+	public void setCamID(String camID) {
 		CamID = camID;
 	}
 	public String getPlaneID() {
@@ -52,22 +52,22 @@ public class JsonDto {
 	public void setPlaneID(String planeID) {
 		PlaneID = planeID;
 	}
-	public int getPeriodEnd() {
+	public long getPeriodEnd() {
 		return PeriodEnd;
 	}
-	public void setPeriodEnd(int periodEnd) {
+	public void setPeriodEnd(long periodEnd) {
 		PeriodEnd = periodEnd;
 	}
-	public int getPeriodStart() {
+	public long getPeriodStart() {
 		return PeriodStart;
 	}
 	public void setPeriodStart(int periodStart) {
 		PeriodStart = periodStart;
 	}
-	public int getAmount() {
+	public long getAmount() {
 		return Amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(long amount) {
 		Amount = amount;
 	}
 	public Timestamp getReg_DT() {

@@ -41,13 +41,21 @@ public class JsonDao {
 	public void insertJson(JsonDto jsonDto) {
 		preparedStatement = null;
 		
-		try {;
-			String query = "insert into testJson(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT) values(#{EventID},#{EventType},#{CamID},#{PlaneID},#{PeriodEnd},#{PeriodStart},#{Amount},#{Reg_DT})";
+		try {
+			String query = "insert into testJson(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT) values(?,?,?,?,?,?,?,?)";
 			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, jsonDto.getEventID());
+			preparedStatement.setString(2, jsonDto.getEventType());
+			preparedStatement.setString(3, jsonDto.getCamID());
+			preparedStatement.setString(4, jsonDto.getPlaneID());
+			preparedStatement.setLong(5, jsonDto.getPeriodEnd());
+			preparedStatement.setLong(6, jsonDto.getPeriodStart());
+			preparedStatement.setLong(7, jsonDto.getAmount());
+			preparedStatement.setTimestamp(8, jsonDto.getReg_DT());
 			int insertResult = preparedStatement.executeUpdate();
 			System.out.println(insertResult);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + ", sql 오류");
 		}finally {
 			try {
 				if(preparedStatement != null) {
@@ -57,7 +65,7 @@ public class JsonDao {
 					connection.close();
 				}
 			}catch(SQLException eFinal) {
-				System.out.println(eFinal.getMessage());
+				System.out.println(eFinal.getMessage() + ", finalSQL오류");
 			}
 		}
 	}
@@ -65,8 +73,7 @@ public class JsonDao {
 	//json 데이터 셀렉트
 	public ArrayList<JsonDto> jsonSelect(){
 		ArrayList<JsonDto> jsonDtoList = new ArrayList<JsonDto>();
-		
-		connection = null;
+
 		statement = null;
 		resultSet = null;
 		
@@ -77,11 +84,11 @@ public class JsonDao {
 			while(resultSet.next()) {
 				String EventID = resultSet.getString("EventID");
 				String EventType = resultSet.getString("EventType");
-				int CamID = resultSet.getInt("CamID");
+				String CamID = resultSet.getString("CamID");
 				String PlaneID = resultSet.getString("PlaneID");
-				int PeriodEnd = resultSet.getInt("PeriodEnd");
-				int PeriodStart = resultSet.getInt("PeriodStart");
-				int Amount = resultSet.getInt("Amount");
+				long PeriodEnd = resultSet.getInt("PeriodEnd");
+				long PeriodStart = resultSet.getInt("PeriodStart");
+				long Amount = resultSet.getInt("Amount");
 				Timestamp Reg_DT = resultSet.getTimestamp("Reg_DT");
 				
 				JsonDto jsonDto = new JsonDto(EventID, EventType, CamID, PlaneID, PeriodEnd, PeriodStart, Amount, Reg_DT);
@@ -171,18 +178,20 @@ public class JsonDao {
     	try {
 			String query = "create table JsonData.testJson\r\n" + 
 					"(\r\n" + 
-					"	EventID	VARCHAR(30) Not Null primary key,\r\n" + 
+					"	EventID	VARCHAR(30) Not Null,\r\n" + 
 					"	EventType VARCHAR(30) not null,\r\n" + 
-					"	CamID int not null,\r\n" + 
-					"	PlaneID VARCHAR(20) not null,\r\n" + 
-					"	PeriodEnd int not null,\r\n" + 
-					"	PeriodStart int not null,\r\n" + 
-					"	Amount int not null,\r\n" + 
-					"	Reg_DT DateTime not null\r\n" + 
+					"	CamID VARCHAR(30) not null,\r\n" + 
+					"	PlaneID VARCHAR(30) not null,\r\n" + 
+					"	PeriodEnd int(11) not null,\r\n" + 
+					"	PeriodStart int(11) not null,\r\n" + 
+					"	Amount int(11) not null,\r\n" + 
+					"	Reg_DT DateTime not null,\r\n" +
+					"	Primary Key (EventID),\r\n" +
+					"	key camIndex (CamID)\r\n" +
 					")";
 			preparedStatement = connection.prepareStatement(query);
-		    int resultCreateTable = preparedStatement.executeUpdate();
-		    System.out.println(resultCreateTable);
+		    boolean resultCreateTable = preparedStatement.execute ();
+		    System.out.println(String.format("결과 = %s", resultCreateTable));
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -193,9 +202,9 @@ public class JsonDao {
 			String query = "Drop table testJson";
 			preparedStatement = connection.prepareStatement(query);
 			
-		    int resultDropTable = preparedStatement.executeUpdate();
+		    boolean resultDropTable = preparedStatement.execute ();
 		    
-		    System.out.println(resultDropTable);
+		    System.out.println(String.format("결과 = %s", resultDropTable));
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -205,8 +214,8 @@ public class JsonDao {
     	try {
 			String query = "Alter table testJson add jbColumn int after Reg_DT";
 			preparedStatement = connection.prepareStatement(query);
-		    int resultAlterTable = preparedStatement.executeUpdate();
-		    System.out.println(resultAlterTable);
+		    boolean resultAlterTable = preparedStatement.execute ();
+		    System.out.println(String.format("결과 = %s", resultAlterTable));
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
 		}

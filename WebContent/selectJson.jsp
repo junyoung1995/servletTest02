@@ -20,20 +20,20 @@
 	        <th>Amount</th>
 	        <th>Reg_DT</th>
 	    </tr>
-	    <c:forEach items="${ jsonSelect }" var="jsonDto" >
+	    <c:forEach items="${ command }" var="seleteJson" >
 	    <tr>
-	        <td>${ jsonDto.EventID }</td>
-	        <td>${ jsonDto.EventType }</td>
-	        <td>${ jsonDto.CamID }</td>
-	        <td>${ jsonDto.PlaneID }</td>
-	        <td>${ jsonDto.PeriodEnd }</td>
-	        <td>${ jsonDto.PeriodStart }</td>
-	        <td>${ jsonDto.Amount }</td>
-	        <td>${ jsonDto.Reg_DT }</td>
+	        <td>${ seleteJson.EventID }</td>
+	        <td>${ seleteJson.EventType }</td>
+	        <td>${ seleteJson.CamID }</td>
+	        <td>${ seleteJson.PlaneID }</td>
+	        <td>${ seleteJson.PeriodEnd }</td>
+	        <td>${ seleteJson.PeriodStart }</td>
+	        <td>${ seleteJson.Amount }</td>
+	        <td>${ seleteJson.Reg_DT }</td>
 	    </tr>
 	    </c:forEach>
 	    <tr>
-	        <td colspan="5"><a href="table.html">버튼 다시 누르기</a></td>
+	        <td colspan="5"><a href="/servletTest02/table.html">버튼 다시 누르기</a></td>
 	    </tr>
 	</table>
 </body>
