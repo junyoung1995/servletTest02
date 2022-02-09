@@ -5,11 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
 <title>데이터 조회</title>
+<style>
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+  }
+  th, td {
+    border: 1px solid #444444;
+  }
+</style>
 </head>
 <body>
 	<h1>list</h1>
 	<hr>
-	<table width="500" cellpadding="0" cellspacing="0" border="1">
+	<table>
 	    <tr>    
 	        <th>EventID</th>
 	        <th>EventType</th>
@@ -32,9 +41,9 @@
 	        <td>${ jsonDto.reg_DT }</td>
 	    </tr>
 	    </c:forEach>
-	    <tr>
-	        <td colspan="5"><a href="/servletTest02/table.html">버튼 다시 누르기</a></td>
-	    </tr>
 	</table>
+	<div>
+		 <a href="/servletTest02/table.html">버튼 다시 누르기</a>
+	</div>
 </body>
 </html>

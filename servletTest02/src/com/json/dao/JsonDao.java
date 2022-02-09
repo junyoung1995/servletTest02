@@ -55,7 +55,7 @@ public class JsonDao {
 			int insertResult = preparedStatement.executeUpdate();
 			System.out.println(insertResult);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage() + ", sql 오류");
+			System.out.println(String.format("SQL 구문 오류 = %s", e.getMessage()));
 		}finally {
 			try {
 				if(preparedStatement != null) {
@@ -65,7 +65,7 @@ public class JsonDao {
 					connection.close();
 				}
 			}catch(SQLException eFinal) {
-				System.out.println(eFinal.getMessage() + ", finalSQL오류");
+				System.out.println(String.format("또 다른 구문 오류 = %s", eFinal.getMessage()));;
 			}
 		}
 	}
@@ -151,13 +151,14 @@ public class JsonDao {
         preparedStatement = null;
         
         try {
-            String query = "delete from testJson where EventID=?";
+            String query = "delete from testJson where EventID = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, EventID);
+            System.out.println(String.format("너의 변수 값은 = %s", EventID));
             int resultDelete = preparedStatement.executeUpdate();
             System.out.println(resultDelete);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(String.format("오류 사항 = %s", e.getMessage()));
         } finally {
             try {
                 if(preparedStatement != null) {
@@ -167,7 +168,7 @@ public class JsonDao {
                 	connection.close();
                 }
             } catch (SQLException eFinal) {
-                System.out.println(eFinal.getMessage());
+                System.out.println(String.format("오류 = %s", eFinal.getMessage()));
             }
         }
     }
