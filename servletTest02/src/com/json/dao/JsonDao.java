@@ -151,7 +151,7 @@ public class JsonDao {
         preparedStatement = null;
         
         try {
-            String query = "delete from testJson where EventID = ?";
+            String query = "delete from testjson where EventID = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, EventID);
             System.out.println(String.format("너의 변수 값은 = %s", EventID));
@@ -191,7 +191,7 @@ public class JsonDao {
 					"	key camIndex (CamID)\r\n" +
 					")";
 			preparedStatement = connection.prepareStatement(query);
-		    boolean resultCreateTable = preparedStatement.execute ();
+		    boolean resultCreateTable = preparedStatement.execute();
 		    System.out.println(String.format("결과 = %s", resultCreateTable));
 		}catch(SQLException e) {
 			System.out.println(e.getMessage());
