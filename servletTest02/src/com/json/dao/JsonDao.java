@@ -1,6 +1,5 @@
 package com.json.dao;
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -95,7 +94,7 @@ public class JsonDao {
 				jsonDtoList.add(jsonDto);
 			}
 		}catch(SQLException e) {
-			System.out.println(e.getMessage());
+			System.out.println(String.format("SQL 구문 오류 = %s", e.getMessage()));
 		}finally {
 				try {
 					if(resultSet != null) {
@@ -108,19 +107,20 @@ public class JsonDao {
 						connection.close();
 					}
 				} catch (SQLException e) {
-					System.out.println(e.getMessage());
+					System.out.println(String.format("2번째 SQL 구문 오류 = %s", e.getMessage()));
 				}
 			}
 		return jsonDtoList;
 	}
 	
-	public void modifyJson(String EventID) {
+	public void modifyJson(String EventID, String EventType, String CamID, String PlandID, String PeriodEnd, String PeriodStart, String Amount, String Reg_DT) {
 		statement = null;
  
         try {
             String query = "update testjson set EventID = 'EventIDChange'";
             statement = connection.prepareStatement(query);
-            statement.executeUpdate(query);
+            int resultModify = statement.executeUpdate(query);
+            System.out.println(String.format("결과 = %s", resultModify));
             //int resultModify = preparedStatement.executeUpdate();
             //System.out.println(resultModify);
         } catch (Exception e) {
@@ -135,7 +135,7 @@ public class JsonDao {
                 	connection.close();
                 }
             } catch (SQLException eFinal) {
-                System.out.println(eFinal.getMessage());
+            	System.out.println(String.format("오류 = %s", eFinal.getMessage()));
             }
         }
     }
