@@ -114,29 +114,22 @@ public class JsonDao {
 		return jsonDtoList;
 	}
 	
-	public void modifyJson(String EventID, String EventType, String CamID, String PlaneID, String PeriodEnd, String PeriodStart, String Amount) {
+	public void modifyJson(String EventID) {
 		statement = null;
-		resultSet = null;
  
         try {
-            String query = "update testJson set EventID=? EventType=?, CamID=?, PlaneID=?, PerionEnd=?, PeriodStart=?, Amount=?";
+            String query = "update testjson set EventID = 'EventIDChange'";
             statement = connection.prepareStatement(query);
-            preparedStatement.setString(1, EventID);
-            preparedStatement.setString(2, EventType);
-            preparedStatement.setInt(3, Integer.parseInt(CamID));
-            preparedStatement.setString(4, PlaneID);
-            preparedStatement.setInt(5, Integer.parseInt(PeriodEnd));
-            preparedStatement.setInt(6, Integer.parseInt(PeriodStart));
-            preparedStatement.setInt(7, Integer.parseInt(Amount));
-            int resultModify = preparedStatement.executeUpdate();
-            System.out.println(resultModify);
+            statement.executeUpdate(query);
+            //int resultModify = preparedStatement.executeUpdate();
+            //System.out.println(resultModify);
         } catch (Exception e) {
             e.printStackTrace();
             // TODO: handle exception
         }finally {
             try {
-                if(preparedStatement != null) {
-                	preparedStatement.close();
+                if(statement != null) {
+                	statement.close();
                 }
                 if(connection != null) {
                 	connection.close();
@@ -153,7 +146,7 @@ public class JsonDao {
         try {
             String query = "delete from testjson where EventID = ?";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, EventID);
+            preparedStatement.setString(1, "EventIDChange");
             System.out.println(String.format("너의 변수 값은 = %s", EventID));
             int resultDelete = preparedStatement.executeUpdate();
             System.out.println(resultDelete);
